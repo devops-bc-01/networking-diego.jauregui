@@ -13,8 +13,9 @@ module "vpc" {
 
   enable_vpn_gateway = false
 
-  enable_nat_gateway     = false
-  single_nat_gateway     = false
+  # Single NAT Gateway
+  enable_nat_gateway     = true
+  single_nat_gateway     = true
   one_nat_gateway_per_az = false
 
   tags = {
@@ -22,4 +23,17 @@ module "vpc" {
     Environment = "dev"
     ManagedBy   = "diego.jaureugi@jala.university"
   }
+}
+################################################################################
+# Security group
+################################################################################
+module "vpc_sg" {
+  source = "terraform-aws-modules/security-group/aws"
+
+  name        = local.vpc.sg.name
+  description = local.vpc.sg.description
+  vpc_id      = module.vpc.vpc_id
+
+  ingress_cidr_blocks = ["0.0.0.0/0"]
+  ingress_rules       = ["ssh-tcp", "all-icmp"]
 }
