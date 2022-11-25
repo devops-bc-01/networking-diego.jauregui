@@ -31,7 +31,7 @@ locals {
   }
 
   ec2 = {
-    name          = "ec2_networking_diego.jauregui"
+    name          = "ec2_net_diego.jauregui"
     instance_type = "t2.micro"
     ami           = "ami-0b0dcb5067f052a63" # Amazon Linux 2 Kernel 5.10 AMI 2.0.20221103.3 x86_64 HVM gp2
   }
