@@ -19,10 +19,14 @@ provider "aws" {
 ################################################################################
 locals {
   vpc = {
-    name = "networking_diego.jauregui"
+    name = "networking_diego_jauregui"
     cidr = "192.168.0.0/20"
     azs  = ["us-east-1a"]
-    subnets = {
+    sg = { # Security Group
+      name        = "sg_vpc_net_diego_jauregui"
+      description = "Security Group rules for Private Connection"
+    }
+    subnets = { # Subnets of Blocks
       # Office 1 (500 H)  Office 2 (80 H)   Office 3 (40 H)
       private = ["192.168.0.0/23", "192.168.2.0/25", "192.168.2.128/26"]
       # Remote Office (20 H)
@@ -30,8 +34,8 @@ locals {
     }
   }
 
-  ec2 = {
-    name          = "ec2_net_diego.jauregui"
+  ec2 = { # Instance variables
+    name          = "ec2_net_diego_jauregui"
     instance_type = "t2.micro"
     ami           = "ami-0b0dcb5067f052a63" # Amazon Linux 2 Kernel 5.10 AMI 2.0.20221103.3 x86_64 HVM gp2
   }
