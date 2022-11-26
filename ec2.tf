@@ -21,7 +21,7 @@ module "ec2_private_instance" {
   count   = length(local.vpc.subnets.private)
 
   depends_on = [
-    module.vpc, module.sg_ec2_net
+    module.vpc, module.sg_ec2_net, module.key_pair
   ]
 
   name = "${local.ec2.name}-priv-${count.index}"
@@ -30,6 +30,8 @@ module "ec2_private_instance" {
   instance_type = local.ec2.instance_type
   monitoring    = false
   subnet_id     = module.vpc.private_subnets[count.index]
+
+  key_name = "public_key_diego_jauregui"
 
   vpc_security_group_ids = tolist([module.sg_ec2_net.security_group_id])
   tags = {
@@ -45,7 +47,7 @@ module "ec2_public_instance" {
   count   = length(local.vpc.subnets.public)
 
   depends_on = [
-    module.vpc, module.sg_ec2_net
+    module.vpc, module.sg_ec2_net, module.key_pair
   ]
 
   name = "${local.ec2.name}-pub-${count.index}"
@@ -54,6 +56,8 @@ module "ec2_public_instance" {
   instance_type = local.ec2.instance_type
   monitoring    = false
   subnet_id     = module.vpc.public_subnets[count.index]
+
+  key_name = "public_key_diego_jauregui"
 
   vpc_security_group_ids = tolist([module.sg_ec2_net.security_group_id])
   tags = {
