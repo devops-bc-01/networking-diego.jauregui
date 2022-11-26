@@ -1,17 +1,5 @@
 # Usage
 
-## 
-
-## Files Structure
-
-| Name               | Description                                                     | File Type |
-| ------------------ | --------------------------------------------------------------- | --------- |
-| [main.tf](main.tf) | - Contains provider AWS<br>- Locals: VPC and EC2 configurations | Terraform |
-| [ec2.tf](ec2.tf)   | Creates multiple EC2 (Amazon AMI Image) based on subnets        | Terraform |
-| [vpc.tf](vpc.tf)   | Creates subnets based on `main.tf` locals                       | Terraform |
-
-## Terraform Commands
-
 Commands necessary
 
 1. Install necessary modules and initiate terraform
@@ -31,6 +19,25 @@ terraform plan -out main.tfplan
 ```sh
 terraform apply main.tfplan
 ```
+
+4. Change [terraform.tfvars](terraform.tfvars) file adding your public key and public key name
+
+    - **public_key_name**: Name of public key
+    - **public_key**: Public key encrypted
+
+5. (Recommended) Copy your private key to the `ec2` public machine
+
+```shell
+scp -i {PATH_OF_PRIVATE_KEY} {PATH_OF_PRIVATE_KEY} ec2-user@{PUBLIC_EC2_IP}:/tmp
+```
+
+## Files Structure
+
+| Name               | Description                                                     | File Type |
+| ------------------ | --------------------------------------------------------------- | --------- |
+| [main.tf](main.tf) | - Contains provider AWS<br>- Locals: VPC and EC2 configurations | Terraform |
+| [ec2.tf](ec2.tf)   | Creates multiple EC2 (Amazon AMI Image) based on subnets        | Terraform |
+| [vpc.tf](vpc.tf)   | Creates subnets based on `main.tf` locals                       | Terraform |
 
 ---
 
